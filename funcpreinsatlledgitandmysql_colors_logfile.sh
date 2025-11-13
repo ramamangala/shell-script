@@ -8,6 +8,7 @@ fi
 R="\e[31m"
 G="\e[32m"
 Y="\e[33m"
+N="\e[0m"
 logs_folder="/var/log/13nov25shellscriptlogs"
 log_file=$(echo $0 | cut -d "." -f1)
 time_stamp=$(date +%Y-%m-%d-%H-%M-%S)
@@ -16,10 +17,10 @@ log_file_name="$logs_folder/$log_file-$time_stamp.log"
 validate() {
 	if [ $1 -ne 0 ]
 	then
-		echo -e "in validate(), $2 $R FAILED"
+		echo -e "in validate(), $2 $R FAILED $N"
 		exit 1
 	else
-		echo -e "in validate(), $2 $G SUCCESS"
+		echo -e "in validate(), $2 $G SUCCESS $N"
 	fi	
 }
 
@@ -29,7 +30,7 @@ then
 	dnf install mysql -y &>> $log_file_name
 	validate $? "MYSQL INSTALLATION"
 else
-	echo -e "MYSQL is already $Y installed"
+	echo -e "MYSQL is already $Y installed $N"
 fi
 dnf list installed git &>> $log_file_name
 if [ $? -ne 0 ]
@@ -37,5 +38,5 @@ then
 	dnf install git -y &>> $log_file_name
 	validate $? "GIT INSTALLATION"
 else
-	echo -e "GIT is already $Y installed"
+	echo -e "GIT is already $Y installed $N"
 fi
